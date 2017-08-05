@@ -15,6 +15,7 @@ public class Main extends Application {
     private static Stage secondaryStage;
     private static HashMap<SceneType, Scene> scenes = new HashMap<>();
 
+    //Trying to commit with my GitHub name
 
     @Override
     public void start(Stage primaryStage) throws Exception{
