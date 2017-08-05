@@ -11,14 +11,16 @@ import java.util.HashMap;
 public class Main extends Application {
 
     private Parent root;
-    private static Stage stage;
+    private static Stage primaryStage;
+    private static Stage secondaryStage;
     private static HashMap<SceneType, Scene> scenes = new HashMap<>();
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         //Make the stage accessible from main
-        stage = primaryStage;
+        Main.primaryStage = primaryStage;
+        secondaryStage = new Stage();
 
         //Set window title
         primaryStage.setTitle("Income Manager");
@@ -38,7 +40,7 @@ public class Main extends Application {
     }
 
     public static void setScene(SceneType scene){
-        stage.setScene(scenes.get(scene));
+        primaryStage.setScene(scenes.get(scene));
     }
 
 
