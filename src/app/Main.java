@@ -6,14 +6,39 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+
 public class Main extends Application {
+
+    private Parent root;
+    private static Stage stage;
+    private static HashMap<SceneType, Scene> scenes = new HashMap<>();
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("view/InitialWindow.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        //Make the stage accessible from main
+        stage = primaryStage;
+
+        //Set window title
+        primaryStage.setTitle("Income Manager");
+
+        //Load the FXML files into a HashMap
+        //Initial window
+        root = FXMLLoader.load(getClass().getResource("view/InitialWindow.fxml"));
+        scenes.put(SceneType.INITIAL, new Scene(root));
+        //Main window
+        root = FXMLLoader.load(getClass().getResource("view/MainWindow.fxml"));
+        scenes.put(SceneType.MAIN, new Scene(root));
+
+        //Put the first scene in the main window
+        setScene(SceneType.INITIAL);
+        //Show the application
         primaryStage.show();
+    }
+
+    public static void setScene(SceneType scene){
+        stage.setScene(scenes.get(scene));
     }
 
 
