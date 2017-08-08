@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.util.HashMap;
 
 public class Main extends Application {
@@ -33,6 +32,7 @@ public class Main extends Application {
         //Main window
         root = FXMLLoader.load(getClass().getResource("view/MainWindow.fxml"));
         scenes.put(SceneType.MAIN, new Scene(root));
+
 
         //Put the first scene in the main window
         setScene(SceneType.INITIAL);
