@@ -10,10 +10,7 @@ public class Value {
     //Splits
     private ArrayList<Double> divisions;
 
-    private HashMap<Double, Double> values = new HashMap<>();
-    //Auto calc remainder
-    private Value remainder; //Null
-    private Double remainderDouble;
+
 
 
 
@@ -23,34 +20,9 @@ public class Value {
     public Value(Double value, ArrayList<Double> divisions){
         this.value = value;
         this.divisions = divisions;
-        divideInitialValue();
     }
 
-    private boolean divideInitialValue() {
-        Double count = value; //Keeps track of the remainder
-        System.out.println("CurrentValue:" + count);
-        for(double div: divisions){
-            System.out.println(div);
-            boolean isPercentage = (div % 1 != 0.0);
-            System.out.println(isPercentage);
 
-            //Check to make sure we're still above 0
-            if (count < 0){
-                return false;
-            }
-
-            if(isPercentage){
-                double percentageValue = count * div;
-                values.put(div, percentageValue);
-                count = count - percentageValue;
-            } else {
-                values.put(div, div);
-                count = count - div;
-            }
-        }
-        this.remainderDouble = count;
-        return true;
-    }
 
     public HashMap<Double, Double> getValues() {
         return values;
