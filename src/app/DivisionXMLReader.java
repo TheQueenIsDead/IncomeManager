@@ -62,4 +62,8 @@ public class DivisionXMLReader {
             writer.writeEndElement();
         }
     }
+
+    public DivisionProfile getDivision() {
+        return divisionProfile;
+    }
 }

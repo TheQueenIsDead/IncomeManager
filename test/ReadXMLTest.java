@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class ReadXMLTest {
     @Test
-    public void readXML() throws IOException, SAXException, ParserConfigurationException {
-        DivisionXMLReader reader = new DivisionXMLReader("/home/david/IdeaProjects/IncomeManager/resource/TestDivisions.xml");
+    public void readTestDivisionsXML() throws IOException, SAXException, ParserConfigurationException {
+        DivisionXMLReader reader = new DivisionXMLReader("resource/TestDivisions.xml");
     }
 }
