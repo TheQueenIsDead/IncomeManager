@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <divisionProfile>
-    <initialDivision>
+    <division>
         <name>Marlboro Fund</name>
         <double>25.0</double>
-    </initialDivision>
+    </division>
 
-    <initialDivision>
+    <division>
         <name>Tithe</name>
         <double>0.10</double>
-    </initialDivision>
+    </division>
 
-    <initialDivision>
+    <division>
         <name>Long Term</name>
         <double>10.0</double>
-    </initialDivision>
+    </division>
 
-    <remainderDivision>
+    <division>
         <name>Cookie Time</name>
         <double>5</double>
-    </remainderDivision>
+    </division>
 </divisionProfile>

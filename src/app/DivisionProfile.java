@@ -11,7 +11,7 @@ public class DivisionProfile {
     private Double remainderValue;
 
     private ArrayList<Double> divisions;
-    private ArrayList<Pair<Double, Double>> divisionValues;
+    private ArrayList<CalculatedDivisionValue> divisionValues;
 
 
     public DivisionProfile(ArrayList<Double> divisions){
@@ -38,9 +38,10 @@ public class DivisionProfile {
 
     public void setValue(Double value){
         this.value = value;
+        calculateDivisionValues();
     }
 
-    public ArrayList<Pair<Double, Double>> getDivisionValues(){
+    public ArrayList<CalculatedDivisionValue> getDivisionValues(){
         return divisionValues;
     }
 
@@ -50,6 +51,11 @@ public class DivisionProfile {
      * @return Returns true if the operation completed successfully
      */
     public boolean calculateDivisionValues() {
+
+        if(value == null){ //"Error" if no value has been set
+            return false;
+        }
+
         double count = value;
 
         System.out.println("CurrentValue:" + count);
@@ -62,12 +68,13 @@ public class DivisionProfile {
                 return false;
             }
 
+        //TODO - Give the DivisionProfile access to the Name string of the division from the reader, and pass it in here
             if(isPercentage){
                 double percentageValue = count * div;
-                divisionValues.add(new Pair(div, percentageValue));
+                divisionValues.add(new CalculatedDivisionValue("PERCENTAGE NAME:", div, percentageValue));
                 count = count - percentageValue;
             } else {
-                divisionValues.add(new Pair(div, div));
+                divisionValues.add(new CalculatedDivisionValue("INTEGER NAME", div, div));
                 count = count - div;
             }
         }
