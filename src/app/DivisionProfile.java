@@ -72,14 +72,14 @@ public class DivisionProfile {
         //TODO - Give the DivisionProfile access to the Name string of the division from the reader, and pass it in here
             if(isPercentage){
                 double percentageValue = count * div;
-                divisionValues.add(new CalculatedDivisionValue("PERCENTAGE NAME:", div, percentageValue));
+                divisionValues.add(new CalculatedDivisionValue("PERCENTAGE NAME:", div, percentageValue, div));
                 count = count - percentageValue;
             } else {
-                divisionValues.add(new CalculatedDivisionValue("INTEGER NAME", div, div));
+                divisionValues.add(new CalculatedDivisionValue("INTEGER NAME", div, div, div/value));
                 count = count - div;
             }
         }
-        divisionValues.add(new CalculatedDivisionValue("REMAINDER", null, count));
+        divisionValues.add(new CalculatedDivisionValue("REMAINDER", null, count, count/value));
         this.remainderValue = count;
         return true;
     }

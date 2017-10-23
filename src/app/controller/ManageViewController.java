@@ -11,7 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
@@ -21,6 +23,8 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ManageViewController implements Initializable{
@@ -110,25 +114,41 @@ public class ManageViewController implements Initializable{
 
     private void updatePercentageView(){
         //Could be moved to initialise
-        System.out.println("Value on: " + reader.getDivision().value);
+        percentagePane.getChildren().removeAll();
 
-        double angle = 360/reader.getDivision().count();
 
-        for(int i = 0; i < reader.getDivision().count(); i++){
+        ArrayList<Color> colours = new ArrayList<>(Arrays.asList(Color.BLUE, Color.YELLOW, Color.GREEN, Color.PURPLE, Color.HOTPINK, Color.LIGHTBLUE));
+
+        double currentExtent = 0;
+
+        for (int i = 0; i < reader.getDivision().count(); i++){
+
+            double arcExtent = 360*(reader.getDivision().getDivisionValues().get(i).getPercentage());
+
+            System.out.println(reader.getDivision().getDivisionValues().get(i));
+            System.out.println("Extent: " + arcExtent);
+            System.out.println("Current: " + currentExtent);
+            currentExtent += arcExtent;
+
+            double start = currentExtent + arcExtent;
+
             double center = percentagePane.getWidth() / 2;
             double radius = percentagePane.getHeight() / 2;
-            double startAngle = i*angle;
-            Arc arc = new Arc(center, center, radius, radius, startAngle, angle);
-            arc.setType(ArcType.OPEN);
-            if(i%2 == 0) {
-                arc.setFill(Paint.valueOf("blue"));
-            } else {
-                arc.setFill(Paint.valueOf("yellow"));
-            }
-                percentagePane.getChildren().add(arc);
+
+            Arc arc = new Arc();
+            arc.setCenterX(center);
+            arc.setCenterY(center);
+            arc.setRadiusX(radius);
+            arc.setRadiusY(radius);
+            arc.setStartAngle(start);
+            arc.setLength(-arcExtent);
+            arc.setType(ArcType.ROUND);
+            arc.setFill(colours.get(i));
+
+
+//            System.out.println("Adding: "+ arc);
+//            arcList.add(arc);
+            percentagePane.getChildren().add(arc);
         }
-
-        //
     }
-
 }
