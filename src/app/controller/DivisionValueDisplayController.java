@@ -6,6 +6,6 @@ public class DivisionValueDisplayController {
 
     @FXML
     private void load(){
-        System.out.println("Load the Divisions here!");
+        System.out.println("Deprecated Controller - Load the Divisions here!");
     }
 }

@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.CalculatedDivisionValue;
 import app.DivisionProfile;
 import app.DivisionXMLReader;
 import javafx.collections.FXCollections;
@@ -24,16 +25,16 @@ import java.util.ResourceBundle;
 public class ManageViewController implements Initializable{
 
     @FXML
-    TextField txtValue;
+    private TextField txtValue;
 
     @FXML
-    TableView divisionTableView;
+    private TableView<CalculatedDivisionValue> divisionTableView;
     @FXML
-    TableColumn columnWeight;
+    private TableColumn<String, Double> columnWeight;
     @FXML
-    TableColumn columnName;
+    private TableColumn<String, String> columnName;
     @FXML
-    TableColumn columnValue;
+    private TableColumn<String, Double> columnValue;
 
 
     private DivisionXMLReader reader;
@@ -41,9 +42,9 @@ public class ManageViewController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupListeners();
-        columnName.setCellFactory(new PropertyValueFactory<>("name"));
-        columnWeight.setCellFactory(new PropertyValueFactory<>("weight"));
-        columnValue.setCellFactory(new PropertyValueFactory<>("value"));
+        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnWeight.setCellValueFactory(new PropertyValueFactory<>("weight"));
+        columnValue.setCellValueFactory(new PropertyValueFactory<>("value"));
     }
 
     private void setupListeners(){
@@ -53,7 +54,7 @@ public class ManageViewController implements Initializable{
     @FXML
     private void load(){
         //TODO - Auto loads the test one,need to make it dynamically load
-        System.out.println("Load the Divisions here!");
+        System.out.println("Loading the test divisions here!");
         try {
             reader = new DivisionXMLReader("resource/TestDivisions.xml");
         } catch (ParserConfigurationException | IOException | SAXException e) {
@@ -76,10 +77,11 @@ public class ManageViewController implements Initializable{
 
     private void updateDisplayValues(){
         //TODO Tidy up, just switched to CDV
-        ObservableList<Object> observableList = FXCollections.observableArrayList();
+        ObservableList<CalculatedDivisionValue> observableList = FXCollections.observableArrayList();
 
         for(CalculatedDivisionValue dv: reader.getDivision().getDivisionValues()){
-            observableList.add(o);
+            observableList.add(dv);
+            System.out.println(dv);
         }
 
         divisionTableView.setItems(observableList);

@@ -38,6 +38,7 @@ public class DivisionProfile {
 
     public void setValue(Double value){
         this.value = value;
+        divisionValues = new ArrayList<>();
         calculateDivisionValues();
     }
 
@@ -78,6 +79,7 @@ public class DivisionProfile {
                 count = count - div;
             }
         }
+        divisionValues.add(new CalculatedDivisionValue("REMAINDER", null, count));
         this.remainderValue = count;
         return true;
     }

@@ -6,6 +6,6 @@ public class ProfileController {
 
     @FXML
     private void load(){
-        System.out.println("Load the Divisions here!");
+        System.out.println("Profile Controller - Load the Divisions here!");
     }
 }
