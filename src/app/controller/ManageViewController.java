@@ -4,7 +4,6 @@ import app.CalculatedDivisionValue;
 import app.DivisionProfile;
 import app.DivisionXMLReader;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,8 +12,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.util.Pair;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Shape;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -35,6 +36,8 @@ public class ManageViewController implements Initializable{
     private TableColumn<String, String> columnName;
     @FXML
     private TableColumn<String, Double> columnValue;
+    @FXML
+    private Pane percentagePane;
 
 
     private DivisionXMLReader reader;
@@ -48,7 +51,21 @@ public class ManageViewController implements Initializable{
     }
 
     private void setupListeners(){
-        txtValue.setOnAction(e -> calculate()); //When the value changes, recalculate
+        //txtValue.setOnAction(e -> calculate()); //When the value changes, recalculate
+        txtValue.setOnKeyReleased(keyEvent -> {
+            System.out.println(txtValue.getText());
+            if(!txtValue.getText().isEmpty()) {
+                try {
+                    calculate();
+                } catch (NumberFormatException nfe) {
+//                    nfe.printStackTrace();
+                    System.out.println("Enter a valid number!");
+                    divisionTableView.setItems(FXCollections.observableArrayList());    //These both reset the view if input is not correct
+                }
+            } else {
+                divisionTableView.setItems(FXCollections.observableArrayList());
+            }
+        });
     }
 
     @FXML
@@ -68,15 +85,18 @@ public class ManageViewController implements Initializable{
 //            System.out.println(reader.getDivision());
             DivisionProfile profile = reader.getDivision();
             profile.setValue(Double.parseDouble(txtValue.getText()));
-            updateDisplayValues();
+            updateTableView();
+            updatePercentageView();
         } else {
             System.err.println("LOAD A PROFILE BUDDY");
         }
 
     }
 
-    private void updateDisplayValues(){
-        //TODO Tidy up, just switched to CDV
+    private void updateTableView(){
+
+        //Updates the table
+
         ObservableList<CalculatedDivisionValue> observableList = FXCollections.observableArrayList();
 
         for(CalculatedDivisionValue dv: reader.getDivision().getDivisionValues()){
@@ -87,4 +107,28 @@ public class ManageViewController implements Initializable{
         divisionTableView.setItems(observableList);
 
     }
+
+    private void updatePercentageView(){
+        //Could be moved to initialise
+        System.out.println("Value on: " + reader.getDivision().value);
+
+        double angle = 360/reader.getDivision().count();
+
+        for(int i = 0; i < reader.getDivision().count(); i++){
+            double center = percentagePane.getWidth() / 2;
+            double radius = percentagePane.getHeight() / 2;
+            double startAngle = i*angle;
+            Arc arc = new Arc(center, center, radius, radius, startAngle, angle);
+            arc.setType(ArcType.OPEN);
+            if(i%2 == 0) {
+                arc.setFill(Paint.valueOf("blue"));
+            } else {
+                arc.setFill(Paint.valueOf("yellow"));
+            }
+                percentagePane.getChildren().add(arc);
+        }
+
+        //
+    }
+
 }

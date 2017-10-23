@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class DivisionProfile {
 
-    private Double value;
+    public Double value;
     private Double remainderValue;
 
     private ArrayList<Double> divisions;
@@ -82,6 +82,10 @@ public class DivisionProfile {
         divisionValues.add(new CalculatedDivisionValue("REMAINDER", null, count));
         this.remainderValue = count;
         return true;
+    }
+
+    public int count(){
+        return divisionValues.size();
     }
 
 //    /**
