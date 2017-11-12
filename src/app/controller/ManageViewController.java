@@ -52,6 +52,7 @@ public class ManageViewController implements Initializable{
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnWeight.setCellValueFactory(new PropertyValueFactory<>("weight"));
         columnValue.setCellValueFactory(new PropertyValueFactory<>("value"));
+
     }
 
     private void setupListeners(){
@@ -90,7 +91,7 @@ public class ManageViewController implements Initializable{
             DivisionProfile profile = reader.getDivision();
             profile.setValue(Double.parseDouble(txtValue.getText()));
             updateTableView();
-            updatePercentageView();
+//            updatePercentageView();
         } else {
             System.err.println("LOAD A PROFILE BUDDY");
         }

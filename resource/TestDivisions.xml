@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <divisionProfile>
-    <division>
-        <name>Marlboro Fund</name>
-        <double>25.0</double>
-    </division>
 
     <division>
         <name>Tithe</name>
         <double>0.10</double>
+    </division>
+
+    <division>
+        <name>Marlboro Fund</name>
+        <double>25.0</double>
     </division>
 
     <division>
@@ -17,7 +18,18 @@
     </division>
 
     <division>
-        <name>Cookie Time</name>
-        <double>5</double>
+        <name>Motorbike Fund</name>
+        <double>50.0</double>
     </division>
+
+    <division>
+        <name>Saver Account</name>
+        <double>0.1</double>
+    </division>
+
+    <division>
+        <name>University</name>
+        <double>0.15</double>
+    </division>
+
 </divisionProfile>
