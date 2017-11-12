@@ -69,12 +69,13 @@ public class DivisionXMLReader {
     }
 
     private void createProfile(){
-        ArrayList<Double> values = new ArrayList();
-        for(Pair p: divisionList){
-            values.add((double) p.getValue());
-        }
+//        ArrayList<Double> values = new ArrayList();
+//        for(Pair p: divisionList){
+//            values.add((double) p.getValue());
+//        }
 
-        divisionProfile = new DivisionProfile(values);
+//        divisionProfile = new DivisionProfile(values);
+        divisionProfile = new DivisionProfile(divisionList);
     }
 
 //    public static void parse() throws XMLStreamException, IOException {

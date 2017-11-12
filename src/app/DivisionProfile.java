@@ -8,17 +8,18 @@ import java.util.HashMap;
 public class DivisionProfile {
 
     public Double value;
-    private Double remainderValue;
+    private Double remainderValue; //TODO - Probably remove since we just add a new CalculatedDivisionValue
 
-    private ArrayList<Double> divisions;
+    private ArrayList<Pair<String, Double>> divisions;
     private ArrayList<CalculatedDivisionValue> divisionValues;
 
 
-    public DivisionProfile(ArrayList<Double> divisions){
-        this.divisions = divisions;
+    public DivisionProfile(ArrayList<Pair<String, Double>> divisionList){
+        this.divisions = divisionList;
         divisionValues = new ArrayList<>();
     }
 
+    //TODO - Note, probably not necessary anymore, we come straight from DXMLReader
     public DivisionProfile(String xmlURL){
         System.out.println("Implement parsing an XML here.");
     }
@@ -28,8 +29,8 @@ public class DivisionProfile {
      * @return Returns true if all values are above 0.
      */
     public boolean validateDivisions(){
-        for(double div: divisions){
-            if(div <= 0){
+        for(Pair<String, Double> div: divisions){
+            if(div.getValue() <= 0){
                 return false;
             }
         }
@@ -60,8 +61,10 @@ public class DivisionProfile {
         double count = value;
 
         System.out.println("CurrentValue:" + count);
-        for(double div: divisions){
-            boolean isPercentage = (div % 1 != 0.0);
+        for(Pair<String, Double> div: divisions){
+            String name = div.getKey();
+            Double divisor = div.getValue();
+            boolean isPercentage = (divisor % 1 != 0.0);
 
             //If we're under 0 and we have another division, then the value is too small for the profile,
             //Or the profile is too large for the value
@@ -71,15 +74,15 @@ public class DivisionProfile {
 
         //TODO - Give the DivisionProfile access to the Name string of the division from the reader, and pass it in here
             if(isPercentage){
-                double percentageValue = count * div;
-                divisionValues.add(new CalculatedDivisionValue("PERCENTAGE NAME:", div, percentageValue, div));
+                double percentageValue = count * divisor;
+                divisionValues.add(new CalculatedDivisionValue(name, divisor, percentageValue, divisor));
                 count = count - percentageValue;
             } else {
-                divisionValues.add(new CalculatedDivisionValue("INTEGER NAME", div, div, div/value));
-                count = count - div;
+                divisionValues.add(new CalculatedDivisionValue(name, divisor, divisor, divisor/value));
+                count = count - divisor;
             }
         }
-        divisionValues.add(new CalculatedDivisionValue("REMAINDER", null, count, count/value));
+        divisionValues.add(new CalculatedDivisionValue("Remainder", null, count, count/value));
         this.remainderValue = count;
         return true;
     }
